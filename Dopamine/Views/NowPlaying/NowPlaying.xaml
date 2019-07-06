@@ -110,38 +110,35 @@
                         </Style>
                     </Border.Style>
                 </Border>
-                <!-- Playback controls + spectrum -->
-                <Grid Panel.ZIndex="1" VerticalAlignment="Bottom">
-                    <commonviews:SpectrumAnalyzerControl x:Name="SpectrumAnalyzer" VerticalAlignment="Bottom" HorizontalAlignment="Left" SizeChanged="SpectrumAnalyzer_SizeChanged"/>
-                    <commonviews:NowPlayingPlaybackControls x:Name="NowPlayingPlaybackControls">
-                        <commonviews:NowPlayingPlaybackControls.Style>
-                            <Style>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=CanShowControls,ElementName=This}" Value="True">
-                                        <DataTrigger.EnterActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimationUsingKeyFrames BeginTime="0:0:0" Storyboard.TargetProperty="Opacity">
-                                                        <SplineDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
-                                                    </DoubleAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </DataTrigger.EnterActions>
-                                        <DataTrigger.ExitActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimationUsingKeyFrames BeginTime="0:0:0.75" Storyboard.TargetProperty="Opacity">
-                                                        <SplineDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
-                                                    </DoubleAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </DataTrigger.ExitActions>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </commonviews:NowPlayingPlaybackControls.Style>
-                    </commonviews:NowPlayingPlaybackControls>
-                </Grid>
+                <!-- Playback controls -->
+                <commonviews:NowPlayingPlaybackControls x:Name="NowPlayingPlaybackControls" Panel.ZIndex="1" VerticalAlignment="Bottom">
+                    <commonviews:NowPlayingPlaybackControls.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=CanShowControls,ElementName=This}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames BeginTime="0:0:0" Storyboard.TargetProperty="Opacity">
+                                                    <SplineDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames BeginTime="0:0:0.75" Storyboard.TargetProperty="Opacity">
+                                                    <SplineDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </commonviews:NowPlayingPlaybackControls.Style>
+                </commonviews:NowPlayingPlaybackControls>
                 <!-- Content -->
                 <dc:Pivot Panel.ZIndex="1" HeaderVisibility="Collapsed" SelectedIndex="{Binding SelectedNowPlayingPage,Converter={StaticResource EnumConverter},ConverterParameter={x:Type enums:NowPlayingPage}}" 
                           FeatheringRadius="24" Margin="0,0,0,80" AnimationType="SlideHorizontal" SlideFadeIn="True">

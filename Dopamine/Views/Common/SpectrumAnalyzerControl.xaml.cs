@@ -11,7 +11,6 @@ namespace Dopamine.Views.Common
     public partial class SpectrumAnalyzerControl : UserControl
     {
         private IPlaybackService playbackService;
-        private IShellService shellService;
 
         public new object DataContext
         {
@@ -24,10 +23,8 @@ namespace Dopamine.Views.Common
             InitializeComponent();
 
             this.playbackService = ServiceLocator.Current.GetInstance<IPlaybackService>();
-            this.shellService = ServiceLocator.Current.GetInstance<IShellService>();
 
             this.playbackService.PlaybackSuccess += (_, __) => this.TryRegisterSpectrumPlayers();
-            this.shellService.WindowStateChanged += (_, __) => this.TryRegisterSpectrumPlayers();
 
             SettingsClient.SettingChanged += (_, e) =>
             {
@@ -50,14 +47,6 @@ namespace Dopamine.Views.Common
                 return;
             }
 
-            if (this.shellService.WindowState == WindowState.Minimized)
-            {
-                // The window state doesn't allow showing the spectrum analyzer
-                return;
-            }
-
-            Application.Current.Dispatcher.Invoke(() => this.SpectrumContainer.Visibility = Visibility.Visible);
-
             if (this.playbackService.Player != null)
             {
                 Application.Current.Dispatcher.Invoke(() => this.LeftSpectrumAnalyzer.RegisterSoundPlayer(this.playbackService.Player.GetWrapperSpectrumPlayer(SpectrumChannel.Left)));
@@ -67,8 +56,6 @@ namespace Dopamine.Views.Common
 
         private void UnregisterSpectrumPlayers()
         {
-            Application.Current.Dispatcher.Invoke(() => this.SpectrumContainer.Visibility = Visibility.Collapsed);
-
             if (this.playbackService.Player != null)
             {
                 Application.Current.Dispatcher.Invoke(() => this.LeftSpectrumAnalyzer.UnregisterSoundPlayer());
